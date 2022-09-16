@@ -2,11 +2,9 @@ import { Fragment } from 'react';
 import { MARCAS,YEARS, PLANES } from '../constants';
 import  useCotizador from '../hooks/useCotizador'
 
-const Formulario = (datos) => {
+const Formulario = () => {
 
-  const {marca,year,plan} = datos
-
-  const { handleChangeDatos } = useCotizador()
+  const {datos, handleChangeDatos } = useCotizador()
 
   return (
     <>
@@ -15,16 +13,17 @@ const Formulario = (datos) => {
           <label className="block mb-3 font-bold text-gray-400 uppercase">MARCA</label>
           <select
             name="marca"
-            className="w-full p-3 bg-white border border-gray-200">
+            className="w-full p-3 bg-white border border-gray-200"
+            value={datos.marca}
+            onChange={e => handleChangeDatos(e)} >
             <option value = "">---Seleccione una Marca---</option>           
             {/* Itera el arreglo con el .map y me coloca las opciones como dinamicas */}
             {MARCAS.map(marca =>(
               <option
                 key={marca.id}
-                value={marca}
-                onChange={e => handleChangeDatos(e)}      
+                value={marca.id}     
               >{marca.nombre}</option>
-                ))}0
+                ))}
           </select>
         </div>
 
@@ -35,7 +34,8 @@ const Formulario = (datos) => {
           <select
             name="year"
             className="w-full p-3 bg-white border border-gray-200"
-            value = {year}
+            value = {datos.year}
+            onChange={e => handleChangeDatos(e)}      
             >
             <option value = "">---Seleccione el Año---</option>
             
@@ -43,7 +43,6 @@ const Formulario = (datos) => {
               <option
                 key={year}
                 value={year}
-                onChange={e => handleChangeDatos(e)}      
               >{year}</option>
                 ))}
 
