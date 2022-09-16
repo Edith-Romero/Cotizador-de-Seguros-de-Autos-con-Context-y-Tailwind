@@ -1,4 +1,4 @@
-import Formulario from "../../../../JSApuntes/JSApuntes/src/guardar/Formulario";
+import Formulario from "./Formulario";
 
 const AppSeguros = () => {
   return (
