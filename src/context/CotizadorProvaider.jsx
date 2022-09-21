@@ -1,5 +1,6 @@
 // 1.- Se importa el hooks
 import { useState, createContext } from "react";
+import { obtenerDiferenciaYear, calcularMarca, calcularPlan, formatearDinero } from '../helpers'
 
 // 2.- Se guarda en una variable
 
@@ -16,12 +17,44 @@ const CotizadorProvaider = ({ children }) => {
 
     const [error, setError] = useState("")
 
+    const [resultado, setResultado] = useState(0)
+
     const handleChangeDatos = (e) => {
         setDatos({
             ...datos,
             [e.target.name]: e.target.value,
         });
     };
+
+    const cotizadorSeguro = () => {
+        // Una base
+
+        let resultado = 2000
+
+        // Obtener diferencia de anios
+
+        const diferencia = obtenerDiferenciaYear(datos.year)
+
+        // Hay que restar el 3%
+
+        resultado -= ((diferencia * 3) * resultado) / 100
+
+        // Europeo 30%
+        // Americano 15%
+        // Asiatico 5%
+        resultado *= calcularMarca(datos.marca)
+
+        // Basico 20%
+        // Completo 50%
+
+        resultado *= calcularPlan(datos.plan)
+
+        //Formatear a Dinero
+        resultado = formatearDinero(resultado)
+        console.log("resultado con dinero", resultado)
+
+        setResultado(resultado)
+    }
 
     return (
         //3.- Se pasa como un componente con la anotacion de provaider
@@ -30,7 +63,8 @@ const CotizadorProvaider = ({ children }) => {
                 datos,
                 handleChangeDatos,
                 error,
-                setError
+                setError,
+                cotizadorSeguro
             }}
         >
             {children}
