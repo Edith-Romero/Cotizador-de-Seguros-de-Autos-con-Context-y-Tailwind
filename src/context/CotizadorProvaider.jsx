@@ -62,7 +62,7 @@ const CotizadorProvaider = ({ children }) => {
         setTimeout(() => {
             setResultado(resultado);
             setCargando(false);
-        }, 3000);
+        }, 1500);
     };
 
     return (

@@ -1,16 +1,16 @@
-export const MARCAS =[
-    {id:1, nombre:"Europeo"},
-    {id:2, nombre:"Americado"},
-    {id:3, nombre:"Asiatico"}
+export const MARCAS = [
+    { id: 1, nombre: "Europeo" },
+    { id: 2, nombre: "Americano" },
+    { id: 3, nombre: "Asiatico" }
 ]
 
-const YEARMAX =new Date().getFullYear();
+const YEARMAX = new Date().getFullYear();
 export const YEARS = Array.from(
     new Array(20),
     (valor, index) => YEARMAX - index
 );
 
-export const PLANES =[
-    {id:1, nombre:"Basico"},
-    {id:2, nombre:"Completo"}
+export const PLANES = [
+    { id: 1, nombre: "Basico" },
+    { id: 2, nombre: "Completo" }
 ]
