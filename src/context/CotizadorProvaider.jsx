@@ -1,6 +1,11 @@
 // 1.- Se importa el hooks
 import { useState, createContext } from "react";
-import { obtenerDiferenciaYear, calcularMarca, calcularPlan, formatearDinero } from '../helpers'
+import {
+    obtenerDiferenciaYear,
+    calcularMarca,
+    calcularPlan,
+    formatearDinero,
+} from "../helpers";
 
 // 2.- Se guarda en una variable
 
@@ -15,9 +20,9 @@ const CotizadorProvaider = ({ children }) => {
         plan: "",
     });
 
-    const [error, setError] = useState("")
-
-    const [resultado, setResultado] = useState(0)
+    const [error, setError] = useState("");
+    const [resultado, setResultado] = useState(0);
+    const [cargando, setCargando] = useState(false);
 
     const handleChangeDatos = (e) => {
         setDatos({
@@ -29,32 +34,36 @@ const CotizadorProvaider = ({ children }) => {
     const cotizadorSeguro = () => {
         // Una base
 
-        let resultado = 2000
+        let resultado = 2000;
 
         // Obtener diferencia de anios
 
-        const diferencia = obtenerDiferenciaYear(datos.year)
+        const diferencia = obtenerDiferenciaYear(datos.year);
 
         // Hay que restar el 3%
 
-        resultado -= ((diferencia * 3) * resultado) / 100
+        resultado -= (diferencia * 3 * resultado) / 100;
 
         // Europeo 30%
         // Americano 15%
         // Asiatico 5%
-        resultado *= calcularMarca(datos.marca)
+        resultado *= calcularMarca(datos.marca);
 
         // Basico 20%
         // Completo 50%
 
-        resultado *= calcularPlan(datos.plan)
+        resultado *= calcularPlan(datos.plan);
 
         //Formatear a Dinero
-        resultado = formatearDinero(resultado)
-        console.log("resultado con dinero", resultado)
+        resultado = formatearDinero(resultado);
 
-        setResultado(resultado)
-    }
+        setCargando(true);
+
+        setTimeout(() => {
+            setResultado(resultado);
+            setCargando(false);
+        }, 3000);
+    };
 
     return (
         //3.- Se pasa como un componente con la anotacion de provaider
@@ -64,7 +73,9 @@ const CotizadorProvaider = ({ children }) => {
                 handleChangeDatos,
                 error,
                 setError,
-                cotizadorSeguro
+                cotizadorSeguro,
+                resultado,
+                cargando,
             }}
         >
             {children}
